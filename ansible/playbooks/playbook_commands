@@ -1,0 +1,3 @@
+ansible target -m ping -i inventory.yaml
+ansible all -m ping  -i inventory.yaml
+ansible-playbook playbook-pingtest.yaml -i inventory.yaml
