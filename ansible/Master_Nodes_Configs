@@ -1,0 +1,23 @@
+#########on all machine##############
+useradd ansible  -m -d /home/ansible -s /bin/bash
+echo -e 'ansible  ALL=(ALL)  NOPASSWD:  ALL' > /etc/sudoers.d/ansible
+
+############on master only#############
+su - ansible
+ssh-keygen
+cd /home/ansible/.ssh 
+cat id_rsa.pub  
+
+###############on target or node only############
+su - ansible
+mkdir -p /home/ansible/.ssh
+touch /home/ansible/.ssh/authorized_keys
+chmod -R 700 /home/ansible/.ssh
+ vim /home/ansible/.ssh/authorized_keys  #### the go back to your master cat copy the key 
+
+
+ ############on master only#############
+ssh ansible@target_ip_address 
+exit
+echo  "target_ server_name   ansible_host=target_server_ip" > inventory.yml
+ansible all -m ping  -i inventory.yml
